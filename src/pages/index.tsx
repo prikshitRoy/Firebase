@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 
 import React from "react";
-import NaveBar from "@/Nav/NaveBar";
+import NaveBar from "@/Navbar/Navbar";
 
 export default function Home() {
   return (

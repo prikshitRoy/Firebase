@@ -1,5 +1,5 @@
 import React from "react";
-import NavRight from "@/Nav/NavRight/NavRight";
+import NavbarRightContent from "@/Navbar/NavbarRightSide/NavbarRightMain/NavbarRightContent";
 
 const NaveBar = () => {
   return (
@@ -8,7 +8,7 @@ const NaveBar = () => {
       <div className="z-auto text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-500">
         FIREBASE
       </div>
-      <NavRight />
+      <NavbarRightContent />
     </div>
   );
 };
