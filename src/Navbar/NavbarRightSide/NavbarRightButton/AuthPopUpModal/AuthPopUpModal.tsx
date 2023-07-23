@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -6,12 +5,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useRecoilState } from "recoil";
 import { LoginSignupModal } from "@/atoms/atomAuthModal";
+import AuthInputs from "@/Navbar/NavbarRightSide/NavbarRightButton/AuthPopUpModal/AuthInputs";
 
 export default function AuthModal() {
   const [modalState, setModalState] = useRecoilState(LoginSignupModal);
@@ -38,16 +35,14 @@ export default function AuthModal() {
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
+            <AuthInputs />
             {/* 
             <OAuthButtons/>
-            <AuthInputs/>
             <ResetPassword /> 
             */}
           </div>
         </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
+        <DialogFooter>DialogFooter</DialogFooter>
       </DialogContent>
     </Dialog>
   );

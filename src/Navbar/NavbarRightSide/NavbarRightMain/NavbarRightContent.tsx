@@ -1,7 +1,7 @@
 import React from "react";
 import NavbarRightButton from "@/Navbar/NavbarRightSide/NavbarRightButton/NavbarRightButton";
 import NavbarRightUser from "@/Navbar/NavbarRightSide/NavbarRightUser/NavbarRightUser";
-import AuthPopUpModal from "@/Navbar/NavbarRightSide/NavbarRightButton/AuthPopUpModal";
+import AuthPopUpModal from "@/Navbar/NavbarRightSide/NavbarRightButton/AuthPopUpModal/AuthPopUpModal";
 
 type NavRightProps = {};
 
