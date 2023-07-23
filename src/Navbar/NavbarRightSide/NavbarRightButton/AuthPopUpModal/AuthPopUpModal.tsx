@@ -42,7 +42,6 @@ export default function AuthModal() {
             */}
           </div>
         </div>
-        <DialogFooter>DialogFooter</DialogFooter>
       </DialogContent>
     </Dialog>
   );

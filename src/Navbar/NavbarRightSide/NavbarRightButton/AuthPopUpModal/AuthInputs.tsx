@@ -2,6 +2,7 @@ import React from "react";
 import { useRecoilValue } from "recoil";
 import { LoginSignupModal } from "@/atoms/atomAuthModal";
 import Login from "@/Navbar/NavbarRightSide/NavbarRightButton/AuthPopUpModal/Login";
+import SignUp from "@/Navbar/NavbarRightSide/NavbarRightButton/AuthPopUpModal/SignUp";
 
 type AuthInputsProps = {};
 
@@ -11,9 +12,7 @@ const AuthInputs: React.FC<AuthInputsProps> = () => {
   return (
     <>
       {modalState.view === "login" && <Login />}
-      {/* 
-      {modalState.view === "signup" && <SignUp />} 
-      */}
+      {modalState.view === "signup" && <SignUp />}
     </>
   );
 };
