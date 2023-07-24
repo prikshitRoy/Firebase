@@ -25,7 +25,7 @@ const OAuthButton: React.FC = () => {
       </Button>
 
       {googleError && (
-        <div>
+        <div className="text-red-700">
           {[
             FIREBASE_ERRORS[
               googleError?.message as keyof typeof FIREBASE_ERRORS

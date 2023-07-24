@@ -4,13 +4,16 @@ import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import SignUp from "@/Navbar/NavbarRightSide/NavbarRightButton/AuthPopUpModal/SignUp";
 import { useSetRecoilState } from "recoil";
+import { auth } from "@/firebase/clientApp";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { FirebaseError } from "firebase/app";
+import { FIREBASE_ERRORS } from "@/firebase/error";
+import { Icons } from "@/components/ui/icons";
 
 type LoginProps = {};
 
 const Login: React.FC<LoginProps> = () => {
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
-
-  const onSubmit = () => {};
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLoginForm((prev) => ({
@@ -21,6 +24,15 @@ const Login: React.FC<LoginProps> = () => {
 
   // Moving to SignUp
   const setAuthModalState = useSetRecoilState(LoginSignupModal);
+
+  //
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
+
+  const onSubmit = (event: React.FocusEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    signInWithEmailAndPassword(loginForm.email, loginForm.password);
+  };
 
   return (
     <form onSubmit={onSubmit} className="col-span-3">
@@ -40,8 +52,19 @@ const Login: React.FC<LoginProps> = () => {
         className="mb-2 text-black"
         onChange={onChange}
       />
+      {error && (
+        <div className="text-red-700">
+          {[FIREBASE_ERRORS[error?.message as keyof typeof FIREBASE_ERRORS]]}
+        </div>
+      )}
 
-      <Button type="submit" variant={"outline"} className="mt-1 mb-3">
+      <Button
+        type="submit"
+        variant={"outline"}
+        className="mt-1 mb-3"
+        disabled={loading}
+      >
+        {loading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
         Log In
       </Button>
       <div className="text-sm justify-center bg-center">
