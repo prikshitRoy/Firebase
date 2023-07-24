@@ -9,6 +9,7 @@ import {
 import { useRecoilState } from "recoil";
 import { LoginSignupModal } from "@/atoms/atomAuthModal";
 import AuthInputs from "@/Navbar/NavbarRightSide/NavbarRightButton/AuthPopUpModal/AuthInputs";
+import OAuthButton from "@/Navbar/NavbarRightSide/NavbarRightButton/AuthPopUpModal/OAuthButton";
 
 export default function AuthModal() {
   const [modalState, setModalState] = useRecoilState(LoginSignupModal);
@@ -29,15 +30,16 @@ export default function AuthModal() {
             {modalState.view === "signup" && "Sign Up"}
             {modalState.view === "resetPassword" && "Reset password"}
           </DialogTitle>
-          <DialogDescription>
+          {/*           <DialogDescription>
             Make changes to your profile here. Click save when you're done.
-          </DialogDescription>
+          </DialogDescription> */}
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
+          <div className="align-middle justify-center w-[70%] col-auto">
+            <OAuthButton />
+            <div className="ml-44">OR</div>
             <AuthInputs />
             {/* 
-            <OAuthButtons/>
             <ResetPassword /> 
             */}
           </div>

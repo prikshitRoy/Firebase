@@ -14,6 +14,7 @@ const NavbarRightButton: React.FC = () => {
       >
         Log In
       </Button>
+
       <Button
         variant="outline"
         onClick={() => setAuthModalState({ open: true, view: "signup" })}

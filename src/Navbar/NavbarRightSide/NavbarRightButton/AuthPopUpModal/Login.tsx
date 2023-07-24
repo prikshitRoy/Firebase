@@ -45,8 +45,8 @@ const Login: React.FC<LoginProps> = () => {
         Log In
       </Button>
       <div className="text-sm justify-center bg-center">
-        <text>New here? </text>
-        <text
+        <div>New here? </div>
+        <div
           className="cursor-pointer hover:underline"
           onClick={() =>
             setAuthModalState((prev) => ({
@@ -56,7 +56,7 @@ const Login: React.FC<LoginProps> = () => {
           }
         >
           SignUp
-        </text>
+        </div>
       </div>
     </form>
   );
