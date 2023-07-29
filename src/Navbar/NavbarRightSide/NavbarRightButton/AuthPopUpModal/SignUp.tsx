@@ -11,12 +11,20 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 type SignUpProps = {};
 
 const SignUp: React.FC<SignUpProps> = () => {
+  // Checking with Firebase
+  const [createUserWithEmailAndPassword, user, loading, userError] =
+    useCreateUserWithEmailAndPassword(auth);
+
+  //-------------------------------------------------------
+
+  // Part: 1 ==> Creating State to capture input from User
   const [signUpForm, setSignUpForm] = useState({
     email: "",
     password: "",
     confirmPassword: "",
   });
 
+  // Part: 2 ==> Capturing input from User and Updating `signUpForm` value
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSignUpForm((prev) => ({
       ...prev,
@@ -24,23 +32,22 @@ const SignUp: React.FC<SignUpProps> = () => {
     }));
   };
 
-  const [error, setError] = useState("");
-
-  const [createUserWithEmailAndPassword, user, loading, userError] =
-    useCreateUserWithEmailAndPassword(auth);
-
-  // Firebase logic
+  // Part: 3 ==> Accessing Captured input and passing to "createUserWithEmailAndPassword()"
+  const [error, setError] = useState(""); // Creating Error for
   const onSubmit = (event: React.FocusEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event.preventDefault(); // To stop it from Reloading
+
     if (error) setError("");
     if (signUpForm.password !== signUpForm.confirmPassword) {
       setError("passwprd do not match");
       return;
     }
-    createUserWithEmailAndPassword(signUpForm.email, signUpForm.password);
+
+    createUserWithEmailAndPassword(signUpForm.email, signUpForm.password); // sending user data to firebase
   };
 
   // Moving to SignUp
+  // Updating the Recoil state value to `LogIn` to open LogIn Modal
   const setAuthModalState = useSetRecoilState(LoginSignupModal);
 
   return (
@@ -78,12 +85,12 @@ const SignUp: React.FC<SignUpProps> = () => {
         type="submit"
         variant={"outline"}
         disabled={loading}
-        className="mt-1 mb-3"
+        className="mb-3 mt-1"
       >
         {loading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
         Sign Up
       </Button>
-      <div className="text-sm justify-center bg-center">
+      <div className="justify-center bg-center text-sm">
         <div>Already have a Account? </div>
         <div
           className="cursor-pointer hover:underline"

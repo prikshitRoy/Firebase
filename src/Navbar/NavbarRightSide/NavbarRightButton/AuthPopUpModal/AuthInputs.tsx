@@ -7,6 +7,7 @@ import SignUp from "@/Navbar/NavbarRightSide/NavbarRightButton/AuthPopUpModal/Si
 type AuthInputsProps = {};
 
 const AuthInputs: React.FC<AuthInputsProps> = () => {
+  // Reading Recoil state
   const modalState = useRecoilValue(LoginSignupModal);
 
   return (

@@ -4,6 +4,7 @@ import { useSetRecoilState } from "recoil";
 import { LoginSignupModal } from "@/atoms/atomAuthModal";
 
 const NavbarRightButton: React.FC = () => {
+  // Using Recoil "useSetRecoilState(LoginSignupModal)" to set the State Manually
   const setAuthModalState = useSetRecoilState(LoginSignupModal);
 
   return (

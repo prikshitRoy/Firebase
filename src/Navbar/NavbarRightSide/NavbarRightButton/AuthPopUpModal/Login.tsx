@@ -1,20 +1,26 @@
-import { LoginSignupModal } from "@/atoms/atomAuthModal";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
-import SignUp from "@/Navbar/NavbarRightSide/NavbarRightButton/AuthPopUpModal/SignUp";
+import { Icons } from "@/components/ui/icons";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useSetRecoilState } from "recoil";
 import { auth } from "@/firebase/clientApp";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { FirebaseError } from "firebase/app";
 import { FIREBASE_ERRORS } from "@/firebase/error";
-import { Icons } from "@/components/ui/icons";
+import { LoginSignupModal } from "@/atoms/atomAuthModal";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 type LoginProps = {};
 
 const Login: React.FC<LoginProps> = () => {
+  // Ckecking with firebase
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
+
+  //-----------------------------------------------------------------
+
+  // Part: 1 ==> Creating State to capture input from User
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
 
+  // Part: 2 ==> Capturing input from User and Updating `loginForm` value
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLoginForm((prev) => ({
       ...prev,
@@ -22,17 +28,16 @@ const Login: React.FC<LoginProps> = () => {
     }));
   };
 
-  // Moving to SignUp
-  const setAuthModalState = useSetRecoilState(LoginSignupModal);
-
-  //
-  const [signInWithEmailAndPassword, user, loading, error] =
-    useSignInWithEmailAndPassword(auth);
-
+  // Part: 3 ==> Accessing Captured input and passing to `signInWithEmailAndPassword()`
   const onSubmit = (event: React.FocusEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    signInWithEmailAndPassword(loginForm.email, loginForm.password);
+    event.preventDefault(); // To stop it from Reloading
+
+    signInWithEmailAndPassword(loginForm.email, loginForm.password); // sending data to firebase
   };
+
+  // Moving to SignUp
+  // Updating the Recoil state value to `SignUp` to open SignUp Modal
+  const setAuthModalState = useSetRecoilState(LoginSignupModal);
 
   return (
     <form onSubmit={onSubmit} className="col-span-3">
@@ -61,13 +66,13 @@ const Login: React.FC<LoginProps> = () => {
       <Button
         type="submit"
         variant={"outline"}
-        className="mt-1 mb-3"
+        className="mb-3 mt-1"
         disabled={loading}
       >
         {loading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
         Log In
       </Button>
-      <div className="text-sm justify-center bg-center">
+      <div className="justify-center bg-center text-sm">
         <div>New here? </div>
         <div
           className="cursor-pointer hover:underline"
