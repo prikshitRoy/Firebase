@@ -8,6 +8,26 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 npx create-next-app@latest
 ```
 
+**Prettier**
+
+```bash
+yarn add prettier
+```
+
+**prettier-plugin-tailwindcss**
+
+```bash
+yarn add prettier-plugin-tailwindcss
+```
+
+- Create `prettier.config.js` file add
+
+```js
+module.exports = {
+  plugins: ["prettier-plugin-tailwindcss"],
+};
+```
+
 **npx shadcn-ui**
 
 ```bash

@@ -7,7 +7,7 @@ type NavRightProps = {};
 
 const NavRight: React.FC<NavRightProps> = () => {
   return (
-    <div className="flex absolute right-0 pr-4 pt-1 gap-x-4">
+    <div className="flex space-x-4">
       <AuthPopUpModal />
       <NavbarRightButton />
       <NavbarRightUser />

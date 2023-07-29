@@ -1,8 +1,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -30,9 +28,6 @@ export default function AuthModal() {
             {modalState.view === "signup" && "Sign Up"}
             {modalState.view === "resetPassword" && "Reset password"}
           </DialogTitle>
-          {/*           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription> */}
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="align-middle justify-center w-[70%] col-auto">
