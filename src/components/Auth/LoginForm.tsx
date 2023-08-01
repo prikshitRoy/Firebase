@@ -8,9 +8,9 @@ import { FIREBASE_ERRORS } from "@/firebase/error";
 import { LoginSignupModal } from "@/atoms/atomAuthModal";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
-type LoginProps = {};
+type LoginFormProps = {};
 
-const Login: React.FC<LoginProps> = () => {
+const LoginForm: React.FC<LoginFormProps> = () => {
   // Ckecking with firebase
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
@@ -40,7 +40,7 @@ const Login: React.FC<LoginProps> = () => {
   const setAuthModalState = useSetRecoilState(LoginSignupModal);
 
   return (
-    <form onSubmit={onSubmit} className="col-span-3">
+    <form onSubmit={onSubmit} className="content-center">
       <Input
         required
         name="email"
@@ -66,16 +66,30 @@ const Login: React.FC<LoginProps> = () => {
       <Button
         type="submit"
         variant={"outline"}
-        className="mb-3 mt-1"
+        className="mb-3 mt-1 flex justify-center"
         disabled={loading}
       >
         {loading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
         Log In
       </Button>
-      <div className="justify-center bg-center text-sm">
-        <div>New here? </div>
+      <div className="flex justify-center text-sm">
+        <div>Forget your password ? </div>
         <div
-          className="cursor-pointer hover:underline"
+          className="cursor-pointer text-blue-400 hover:underline"
+          onClick={() =>
+            setAuthModalState((prev) => ({
+              ...prev,
+              view: "resetPassword",
+            }))
+          }
+        >
+          Reset
+        </div>
+      </div>
+      <div className="flex justify-center text-sm">
+        <div>New here?</div>
+        <div
+          className="cursor-pointer text-blue-400 hover:underline"
           onClick={() =>
             setAuthModalState((prev) => ({
               ...prev,
@@ -89,4 +103,4 @@ const Login: React.FC<LoginProps> = () => {
     </form>
   );
 };
-export default Login;
+export default LoginForm;

@@ -8,9 +8,9 @@ import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 
-type SignUpProps = {};
+type SignUpFormProps = {};
 
-const SignUp: React.FC<SignUpProps> = () => {
+const SignUpForm: React.FC<SignUpFormProps> = () => {
   // Checking with Firebase
   const [createUserWithEmailAndPassword, user, loading, userError] =
     useCreateUserWithEmailAndPassword(auth);
@@ -51,7 +51,7 @@ const SignUp: React.FC<SignUpProps> = () => {
   const setAuthModalState = useSetRecoilState(LoginSignupModal);
 
   return (
-    <form onSubmit={onSubmit} className="col-span-3">
+    <form onSubmit={onSubmit} className="content-center">
       <Input
         required
         name="email"
@@ -90,10 +90,10 @@ const SignUp: React.FC<SignUpProps> = () => {
         {loading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
         Sign Up
       </Button>
-      <div className="justify-center bg-center text-sm">
+      <div className="flex justify-center text-sm">
         <div>Already have a Account? </div>
         <div
-          className="cursor-pointer hover:underline"
+          className="cursor-pointer text-blue-400 hover:underline"
           onClick={() =>
             setAuthModalState((prev) => ({
               ...prev,
@@ -107,4 +107,4 @@ const SignUp: React.FC<SignUpProps> = () => {
     </form>
   );
 };
-export default SignUp;
+export default SignUpForm;

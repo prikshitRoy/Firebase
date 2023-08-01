@@ -6,8 +6,12 @@ import {
 } from "@/components/ui/dialog";
 import { useRecoilState } from "recoil";
 import { LoginSignupModal } from "@/atoms/atomAuthModal";
-import AuthInputs from "@/Navbar/NavbarRightSide/NavbarRightButton/AuthPopUpModal/AuthInputs";
-import OAuthButton from "@/Navbar/NavbarRightSide/NavbarRightButton/AuthPopUpModal/OAuthButton";
+import AuthInputs from "@/components/Auth/AuthButtons/AuthInputs";
+import OAuthButton from "@/components/Auth/OAuthButton";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/clientApp";
+import { useEffect } from "react";
+import ResetPassword from "@/components/Auth/ResetPassword";
 
 export default function AuthModal() {
   // Using User assigned `State Value` in NavbarRightButton
@@ -24,25 +28,34 @@ export default function AuthModal() {
     }));
   };
 
+  //Closing "AuthPopUpModal" using useAuthState()
+  //If the user Object is not null it will close the Modal
+  const [user, loading, error] = useAuthState(auth);
+  useEffect(() => {
+    if (user) handalClose();
+    /*     console.log("User Login Data ( AuthPopUpModal ) :", user); */
+  }, [user]);
+
   return (
     <Dialog open={modalState.open} onOpenChange={handalClose}>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
+        <DialogHeader className="items-center">
           <DialogTitle>
             {modalState.view === "login" && "Login"}
             {modalState.view === "signup" && "Sign Up"}
             {modalState.view === "resetPassword" && "Reset password"}
           </DialogTitle>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="col-auto w-[70%] justify-center align-middle">
-            <OAuthButton />
-            <div className="ml-44">OR</div>
-            <AuthInputs />
-            {/* 
-            <ResetPassword /> 
-            */}
-          </div>
+        <div className="items-center space-y-4">
+          {modalState.view === "login" || modalState.view === "signup" ? (
+            <>
+              <OAuthButton />
+              <div className="ml-44">OR</div>
+              <AuthInputs />
+            </>
+          ) : (
+            <ResetPassword />
+          )}
         </div>
       </DialogContent>
     </Dialog>
