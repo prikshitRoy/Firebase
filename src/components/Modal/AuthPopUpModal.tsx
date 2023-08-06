@@ -6,14 +6,14 @@ import {
 } from "@/components/ui/dialog";
 import { useRecoilState } from "recoil";
 import { LoginSignupModal } from "@/atoms/atomAuthModal";
-import AuthInputs from "@/components/Auth/AuthButtons/AuthInputs";
+import AuthInputs from "@/components/Buttons/AuthButtons/AuthInputs";
 import OAuthButton from "@/components/Auth/OAuthButton";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/clientApp";
 import { useEffect } from "react";
 import ResetPassword from "@/components/Auth/ResetPassword";
 
-export default function AuthModal() {
+export default function AuthPopUpModal() {
   // Using User assigned `State Value` in NavbarRightButton
   const [modalState, setModalState] = useRecoilState(LoginSignupModal);
 

@@ -2,17 +2,19 @@ import { LoginSignupModal } from "@/atoms/atomAuthModal";
 import { Icons } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { auth } from "@/firebase/clientApp";
+import { auth, firestore } from "@/firebase/clientApp";
 import { FIREBASE_ERRORS } from "@/firebase/error";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { User } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
 
 type SignUpFormProps = {};
 
 const SignUpForm: React.FC<SignUpFormProps> = () => {
   // Checking with Firebase
-  const [createUserWithEmailAndPassword, user, loading, userError] =
+  const [createUserWithEmailAndPassword, userCred, loading, userError] =
     useCreateUserWithEmailAndPassword(auth);
 
   //-------------------------------------------------------
@@ -45,6 +47,20 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
 
     createUserWithEmailAndPassword(signUpForm.email, signUpForm.password); // sending user data to firebase
   };
+
+  // Adding User to Firestore Database: PART - 1
+  const createUserDocument = async (user: User) => {
+    await addDoc(
+      collection(firestore, "users"),
+      JSON.parse(JSON.stringify(user)),
+    );
+  };
+  // Adding User to Firestore Database: PART - 2
+  useEffect(() => {
+    if (userCred) {
+      createUserDocument(userCred.user);
+    }
+  }, [userCred]);
 
   // Moving to SignUp
   // Updating the Recoil state value to `LogIn` to open LogIn Modal

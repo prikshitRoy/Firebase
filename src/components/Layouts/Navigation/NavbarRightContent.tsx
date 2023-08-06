@@ -1,7 +1,7 @@
 import React from "react";
-import LoginAndSignupButtons from "@/components/Auth/AuthButtons/LoginAndSignupButtons";
-import AuthPopUpModal from "@/components/Modal/AuthModal/AuthPopUpModal";
-import { DropdownMenuUser } from "../../User/DropdownMenuUser";
+import LoginAndSignupButtons from "@/components/Buttons/AuthButtons/LoginAndSignupButtons";
+import AuthPopUpModal from "@/components/Modal/AuthPopUpModal";
+import { DropdownMenuUser } from "@/components/User/DropdownMenuUser";
 import { User } from "firebase/auth";
 
 type NavbarRightContentProps = {

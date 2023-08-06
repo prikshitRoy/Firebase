@@ -12,19 +12,21 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 import NavbarRightUser from "./NavbarRightUser";
 import { signOut } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/clientApp";
 
 export function DropdownMenuUser() {
+  const [activeUser, loading, error] = useAuthState(auth);
+
   // Common className to be applied to all DropdownMenuItem elements
   const commonClassName = "cursor-pointer hover:bg-neutral-800";
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <NavbarRightUser />
+        <NavbarRightUser user={activeUser} />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="z-10 mr-4 w-56 bg-black">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
