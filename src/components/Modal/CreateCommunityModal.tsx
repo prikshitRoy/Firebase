@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@chakra-ui/react";
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { doc, runTransaction, serverTimestamp } from "firebase/firestore";
 import { auth, firestore } from "@/firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Icons } from "@/components/ui/icons";
@@ -62,19 +62,31 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
 
     try {
       const communityDocRef = doc(firestore, "communities", communityName);
-      const communityDoc = await getDoc(communityDocRef);
 
-      // Check if the community name is available
-      if (communityDoc.exists()) {
-        throw new Error(`Sorry ${communityName} is taken.`);
-      }
+      // Transaction
+      await runTransaction(firestore, async (transaction) => {
+        // Check if the community name is available
+        const communityDoc = await transaction.get(communityDocRef);
+        if (communityDoc.exists()) {
+          throw new Error(`Sorry ${communityName} is taken.`);
+        }
 
-      // Create the community document
-      await setDoc(communityDocRef, {
-        creatorId: user?.uid,
-        createdAt: serverTimestamp(),
-        numberOfMembers: 1,
-        privacyType: communityType,
+        // Create the community document
+        transaction.set(communityDocRef, {
+          creatorId: user?.uid,
+          createdAt: serverTimestamp(),
+          numberOfMembers: 1,
+          privacyType: communityType,
+        });
+
+        // create communitySnippit on User
+        transaction.set(
+          doc(firestore, `users/${user?.uid}/communitySnippets`, communityName),
+          {
+            communityId: communityName,
+            isModerator: true,
+          },
+        );
       });
     } catch (error: any) {
       console.log(
@@ -115,10 +127,9 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
               <div className="text-red-500 ">{error}</div>
               <div className="mb-4 mt-4">
                 <div className="mb-3 text-lg">Community Type</div>
-                {/* CheckBox */}
                 <div className="flex flex-col space-y-2">
-                  <div className="flex items-center space-x-2"></div>
                   {/* CheckBox */}
+
                   <Checkbox
                     name="Public"
                     isChecked={communityType === "Public"}
@@ -140,6 +151,8 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
                   >
                     Private
                   </Checkbox>
+
+                  {/* CheckBox */}
                 </div>
               </div>
             </div>

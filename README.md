@@ -53,6 +53,18 @@ yarn add firebase
 yarn add react-firebase-hooks
 ```
 
+**Using safe-json-stringify so Next.js Understand Firebase TimeStamp**
+
+```bash
+yarn add safe-json-stringify
+```
+
+**Oftentimes when you Install a Library it tells you to install the `types` for that Library**
+
+```bash
+yarn add @types/safe-json-stringify
+```
+
 ## Getting Started
 
 First, run the development server:

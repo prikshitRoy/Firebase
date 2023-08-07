@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import NavbarRightContent from "@/components/Layouts/Navigation/NavbarRightContent";
 import NavBarLeftContent from "./NavBarLeftContent";
 
-const NaveBar = () => {
+const NavBar = () => {
   const [activeUser, loading, error] = useAuthState(auth);
 
   return (
@@ -20,7 +20,7 @@ const NaveBar = () => {
   );
 };
 
-export default NaveBar;
+export default NavBar;
 /* flex fixed w-full justify-between p-4 bg-gray-500  */
 /* left-0 top-0 */
 /* items-center  ==> It keeps items center vertically */
